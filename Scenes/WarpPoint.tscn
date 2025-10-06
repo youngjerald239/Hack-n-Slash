@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://r5glg4vkwy6c"]
+
+[ext_resource type="Script" uid="uid://cgp5fx6xewwey" path="res://WarpPoint.gd" id="1_ouoy8"]
+[ext_resource type="Texture2D" uid="uid://b836xn587ytvh" path="res://ImportedAssets/Legacy Fantasy - Castle Prison/Assets/PropsevilDoor.png" id="2_htavo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1j7m3"]
+atlas = ExtResource("2_htavo")
+region = Rect2(0, 0, 29, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yrv72"]
+atlas = ExtResource("2_htavo")
+region = Rect2(0, 0, 29, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wtwy6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1j7m3")
+}],
+"loop": true,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yrv72")
+}],
+"loop": true,
+"name": &"Land",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1j7m3"]
+size = Vector2(24, 80)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1j7m3"]
+radius = 32.1403
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1j7m3"]
+gravity = Vector3(0, 98, 0)
+scale_min = 40.8
+scale_max = 75.63
+color = Color(0, 0.0235294, 1, 0.180392)
+
+[node name="WarpPoint" type="RigidBody2D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_ouoy8")
+
+[node name="PropsevilDoor" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 0.152941, 1, 1)
+position = Vector2(1, -4)
+sprite_frames = SubResource("SpriteFrames_wtwy6")
+animation = &"Land"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_1j7m3")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_1j7m3")
+
+[node name="LandingParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(0, 0, 1, 0.380392)
+position = Vector2(0, -9.34)
+sub_emitter = NodePath(".")
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_1j7m3")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

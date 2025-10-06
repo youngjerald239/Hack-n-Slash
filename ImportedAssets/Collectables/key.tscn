@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://l8lav3tv3fkq"]
+
+[ext_resource type="Script" uid="uid://dqtjaiqjner73" path="res://ImportedAssets/Collectables/key.gd" id="1_bnyum"]
+[ext_resource type="Texture2D" uid="uid://euwelatyuxep" path="res://ImportedAssets/Sunny Land Collection Files/Assets/Props Items and VFX/Sunnyland items/Sprites/gem/gem-1.png" id="1_cva4y"]
+[ext_resource type="Texture2D" uid="uid://b8xgk73t2shbp" path="res://ImportedAssets/Sunny Land Collection Files/Assets/Props Items and VFX/Sunnyland items/Sprites/gem/gem-2.png" id="2_bnyum"]
+[ext_resource type="Texture2D" uid="uid://bmn32l6cgxqlp" path="res://ImportedAssets/Sunny Land Collection Files/Assets/Props Items and VFX/Sunnyland items/Sprites/gem/gem-3.png" id="3_ryppi"]
+[ext_resource type="Texture2D" uid="uid://cp1kxnbwbcgi6" path="res://ImportedAssets/Sunny Land Collection Files/Assets/Props Items and VFX/Sunnyland items/Sprites/gem/gem-4.png" id="4_doxu3"]
+[ext_resource type="Texture2D" uid="uid://bjjte6jr8xdxa" path="res://ImportedAssets/Sunny Land Collection Files/Assets/Props Items and VFX/Sunnyland items/Sprites/gem/gem-5.png" id="5_mi0t4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_60x8p"]
+radius = 21.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6vvhq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_cva4y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_bnyum")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ryppi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_doxu3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_mi0t4")
+}],
+"loop": true,
+"name": &"Gem",
+"speed": 5.0
+}]
+
+[node name="Key" type="Area2D"]
+script = ExtResource("1_bnyum")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_60x8p")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(3.3, 2.26923)
+sprite_frames = SubResource("SpriteFrames_6vvhq")
+animation = &"Gem"
+autoplay = "Gem"
+frame = 3
+frame_progress = 0.457996
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
